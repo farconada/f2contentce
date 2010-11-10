@@ -1,0 +1,2 @@
+plugin.tx_f2contentce.settings {
+}
