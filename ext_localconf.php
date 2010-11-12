@@ -3,12 +3,23 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
-	'Pi1',
+	'Feed',
 	array(
-		'Contentce' => 'feed,list',
+		'Contentce' => 'feed',
 	),
 	array(
-		'Contentce' => 'feed,list',
+		'Contentce' => 'feed',
+	)
+);
+
+Tx_Extbase_Utility_Extension::configurePlugin(
+	$_EXTKEY,
+	'Gmaps',
+	array(
+		'Contentce' => 'gmaps',
+	),
+	array(
+		'Contentce' => 'gmaps',
 	)
 );
 

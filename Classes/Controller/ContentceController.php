@@ -49,7 +49,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 
 	/**
-	 * lista los elementos del feed
+	 * lista los elementos del feed de typo RSS o ATOM
 	 *
 	 * @return string The rendered HTML string
 	 */
@@ -62,6 +62,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$myEntries = array();
 
 		try {
+			// TODO parametrizar URL en un Flexform
 			$feedArray = Zend_Feed::findFeeds('http://twitter.com/farconadaT3');
 		} catch (Exception $e) {
 			// TODO añadir codigo de gestion de la excepcion
@@ -93,7 +94,8 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 				// Solo se procesa el primer feed de la pagina
 			break;
 		}
-		var_dump($myEntries);
+		// TODO asignar $myEntries a la vista y generarla
+		//var_dump($myEntries);
 
 
 
