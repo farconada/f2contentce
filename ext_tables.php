@@ -16,6 +16,7 @@ t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'f2contentce')
 
 // Flexform para Feeds
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_feed'] = 'pi_flexform';
-t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_feed', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_feed.xml');
+//t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_feed', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_feed.xml');
+t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_feed', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/ConfigurationActions.xml');
 
 ?>
