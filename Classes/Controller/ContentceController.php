@@ -46,7 +46,10 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	}
 
+		// TODO Photo Gallery
+	public photoGalleryAction() {
 
+	}
 
 	/**
 	 * lista los elementos del feed de typo RSS o ATOM
@@ -101,6 +104,14 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	}
 
+	// TODO Accion para mostrar un CE de Google maps sencillo
+	/**
+	 *
+	 * Enter description here ...
+	 */
+	public function gmapsAction() {
+
+	}
 	/**
 	 * Convierte un Objeto a un string sin tags HTML
 	 *
