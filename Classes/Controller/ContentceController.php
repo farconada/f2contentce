@@ -47,10 +47,23 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	}
 
 		// TODO Photo Gallery
-	public photoGalleryAction() {
+	public function photoGalleryAction() {
 
 	}
 
+		// TODO YouTube video
+	public function youtubeAction() {
+
+	}
+	// TODO Vimeo Video
+	public function vimeoAction() {
+
+	}
+
+		// TODO Google Video
+	public function googlevideoAction() {
+
+	}
 	/**
 	 * lista los elementos del feed de typo RSS o ATOM
 	 *
@@ -60,45 +73,44 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		t3lib_div::debug($this->settings);
 	}
 
+
 	public function feedAction() {
 		$feedArray = null;
 		$myEntries = array();
 
 		try {
-			// TODO parametrizar URL en un Flexform
-			$feedArray = Zend_Feed::findFeeds('http://twitter.com/farconadaT3');
+				// TODO parametrizar URL en un Flexform
+			$feedLinks = Zend_Feed_Reader::findFeedLinks('http://www.darknet.org.uk/');
 		} catch (Exception $e) {
-			// TODO añadir codigo de gestion de la excepcion
+			$this->flashMessages->add("Error: ha habido un problema en el servidor al recuperar el feed");
 		}
 
-			// una pagina puede tener mas de un feed
-		foreach ($feedArray as $feed) {
-			if (is_a($feed, 'Zend_Feed_Rss')){
-				foreach ($feed as $entry) {
-					$myEntries[] = array(
-						'title' 	=> $this->objectToPlainText($entry->title),
-						'link' 		=> $this->objectToPlainText($entry->link),
-						'content' 	=> $this->objectToPlainText($entry->description),
-						'date' 		=> $this->objectToPlainText($entry->pubDate),
-						'author' 	=> $this->objectToPlainText($entry->author)
-					);
-				}
-			}elseif (is_a($feed, 'Zend_Feed_Atom')) {
-				foreach ($feed as $entry) {
-					$myEntries[] = array(
-						'title' 	=> $this->objectToPlainText($entry->title),
-						'link' 		=> $this->objectToPlainText($entry->link),
-						'content' 	=> $this->objectToPlainText($entry->summary) ? $this->objectToPlainText($entry->summary) : $this->objectToPlainText($entry->description) ,
-						'date' 		=> $this->objectToPlainText($entry->published),
-						'author' 	=> $this->objectToPlainText($entry->author->name)
-					);
-				}
+		if (count($feedLinks) == 0) {
+			$this->flashMessages->add("No hay feeds que recuperar");
+		}
+
+			// una pagina puede tener mas de un feed aunque solo se usa el primero
+		foreach ($feedLinks as $feedLink) {
+			$feed = Zend_Feed_Reader::import($feedLink['href']);
+			foreach ($feed as $entry) {
+				$edata = array(
+						'title'        => strip_tags($entry->getTitle()),
+						'description'  => strip_tags($entry->getDescription()),
+						'date' => $entry->getDateModified()->toString('d-M-y'),
+						'author'      => is_array($entry->getAuthors()) ? implode(' , ', $entry->getAuthors()): $entry->getAuthors(),
+						'link'         => $entry->getLink(),
+						'content'      => strip_tags($entry->getContent())
+				);
+				$data[] = $edata;
 			}
-				// Solo se procesa el primer feed de la pagina
 			break;
 		}
-		// TODO asignar $myEntries a la vista y generarla
-		//var_dump($myEntries);
+
+		if (count($data) == 0) {
+			$this->flashMessages->add("No hay entradas en el feeds que recuperar");
+		}
+
+		$this->view->assign('feedEntries',$data);
 
 
 
@@ -120,7 +132,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	 *
 	 */
 	private function objectToPlainText($object) {
-		return strip_tags($object->__toString());
+		return strip_tags($object.'');
 	}
 }
 ?>
