@@ -23,5 +23,16 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	)
 );
 
+Tx_Extbase_Utility_Extension::configurePlugin(
+	$_EXTKEY,
+	'Video',
+	array(
+		'Contentce' => 'vimeo,youtube,googlevideo',
+	),
+	array(
+		'Contentce' => 'vimeo,youtube,googlevideo',
+	)
+);
+
 
 ?>

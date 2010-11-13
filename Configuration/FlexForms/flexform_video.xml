@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <T3DataStructure>
+	<sheets>
+	<sDEF>
+		 <ROOT>
+			<TCEforms>
+			<sheetTitle>Configuracion de Video</sheetTitle>
+			</TCEforms>
+			<type>array</type>
+			<el>
+			<switchableControllerActions>
+				 <TCEforms>
+					<label>Seleccione un proveedor de video</label>
+					<config>
+					<type>select</type>
+					<items>
+						<numIndex index="0">
+							 <numIndex index="0">YouTube</numIndex>
+							 <numIndex index="1">Contentce->youtube</numIndex>
+						</numIndex>
+						<numIndex index="1">
+							 <numIndex index="0">Vimeo</numIndex>
+							 <numIndex index="1">Contentce->vimeo</numIndex>
+						</numIndex>
+						</items>
+					</config>
+				 </TCEforms>
+			</switchableControllerActions>
+			<settings.videoId>
+				<TCEforms>
+					<label>Video ID</label>
+					<config>
+						<type>input</type>
+					</config>
+				</TCEforms>
+			</settings.videoId>
+			<settings.height>
+				<TCEforms>
+					<label>Height</label>
+					<config>
+						<type>input</type>
+						<default>225</default>
+					</config>
+				</TCEforms>
+			</settings.height>
+			</el>
+		 </ROOT>
+	</sDEF>
+	</sheets>
+</T3DataStructure>

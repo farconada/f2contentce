@@ -53,38 +53,39 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 		// TODO YouTube video
 	public function youtubeAction() {
-
+		$video['height'] = $this->settings['height'];
+		$video['id'] = $this->settings['videoId'];
+		$this->view->assign('video', $video);
 	}
 	// TODO Vimeo Video
 	public function vimeoAction() {
+		$video['height'] = $this->settings['height'];
+		$video['id'] = $this->settings['videoId'];
+		$this->view->assign('video', $video);
 
 	}
 
-		// TODO Google Video
-	public function googlevideoAction() {
-
-	}
 
 
 	/**
 	 * Busca los Feeds de una URL y muestra las entradas
 	 *
-	 * @return	La vista HTML
+	 * @return	void La vista HTML
 	 */
 	public function feedAction() {
-		$feedArray = null;
+		$feedArray = NULL;
 		$myEntries = array();
 
 		try {
 				// TODO parametrizar URL en un Flexform
 			$feedLinks = Zend_Feed_Reader::findFeedLinks('http://www.f1aldia.com');
 		} catch (Exception $e) {
-			$this->flashMessages->add("Error: ha habido un problema en el servidor al recuperar el feed");
+			$this->flashMessages->add('Error: ha habido un problema en el servidor al recuperar el feed');
 			return;
 		}
 
 		if (count($feedLinks) == 0) {
-			$this->flashMessages->add("No hay feeds que recuperar");
+			$this->flashMessages->add('No hay feeds que recuperar');
 		}
 
 			// una pagina puede tener mas de un feed aunque solo se usa el primero
@@ -105,15 +106,15 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		}
 
 		if (count($data) == 0) {
-			$this->flashMessages->add("No hay entradas en el feeds que recuperar");
+			$this->flashMessages->add('No hay entradas en el feeds que recuperar');
 		}
 
 			// Limitar las entradas del feed
 		$maxEntries = t3lib_div::intval_positive($this->settings['feed']['maxEntries']);
 		if ($maxEntries && count($data) > $maxEntries) {
-				$data = array_slice($data, 0,$maxEntries);
+				$data = array_slice($data, 0, $maxEntries);
 		}
-		$this->view->assign('feedEntries',$data);
+		$this->view->assign('feedEntries', $data);
 
 
 
