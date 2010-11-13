@@ -2,12 +2,24 @@
 <f:if condition="{feedEntries}">
 <f:then>
 	<div class="f2contentce feedEntries">
+		<f:cObject typoscriptObjectPath="plugin.tx_f2contentce.settings.feed.preFeed"></f:cObject>
 		<f:for each="{feedEntries}" as="entry">
 			<div class="feedentry">
-				<div class="title">{f:if(condition: '{entry.author}', then: '<span class="author">{entry.author}:</span> ')}{entry.title}</div>
-				<f:debug>{entry}</f:debug>
+				<f:cObject typoscriptObjectPath="plugin.tx_f2contentce.settings.feed.preContent"></f:cObject>
+				<div class="title">
+					<a href="{entry.link}">
+						<span class="date">{entry.date} </span>{f:if(condition: '{entry.author}', then: '<span class="author">{entry.author}:</span> ')}{entry.title}
+					</a>
+				</div>
+				<f:if condition="{entry.title} != {entry.content}">
+				<f:then>
+					{f:if(condition: '{entry.content}', then:'{entry.content}', else:'<div class="content">{entry.description}</div>')}
+				</f:then>
+				</f:if>
+				<f:cObject typoscriptObjectPath="plugin.tx_f2contentce.settings.feed.postContent"></f:cObject>
 			</div>
 		</f:for>
+		<f:cObject typoscriptObjectPath="plugin.tx_f2contentce.settings.feed.postFeed"></f:cObject>
 	</div>
 </f:then>
 </f:if>

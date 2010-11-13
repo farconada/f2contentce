@@ -64,25 +64,23 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	public function googlevideoAction() {
 
 	}
+
+
 	/**
-	 * lista los elementos del feed de typo RSS o ATOM
+	 * Busca los Feeds de una URL y muestra las entradas
 	 *
-	 * @return string The rendered HTML string
+	 * @return	La vista HTML
 	 */
-	public function listAction() {
-		t3lib_div::debug($this->settings);
-	}
-
-
 	public function feedAction() {
 		$feedArray = null;
 		$myEntries = array();
 
 		try {
 				// TODO parametrizar URL en un Flexform
-			$feedLinks = Zend_Feed_Reader::findFeedLinks('http://www.darknet.org.uk/');
+			$feedLinks = Zend_Feed_Reader::findFeedLinks('http://www.f1aldia.com');
 		} catch (Exception $e) {
 			$this->flashMessages->add("Error: ha habido un problema en el servidor al recuperar el feed");
+			return;
 		}
 
 		if (count($feedLinks) == 0) {
@@ -110,6 +108,11 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 			$this->flashMessages->add("No hay entradas en el feeds que recuperar");
 		}
 
+			// Limitar las entradas del feed
+		$maxEntries = t3lib_div::intval_positive($this->settings['feed']['maxEntries']);
+		if ($maxEntries && count($data) > $maxEntries) {
+				$data = array_slice($data, 0,$maxEntries);
+		}
 		$this->view->assign('feedEntries',$data);
 
 

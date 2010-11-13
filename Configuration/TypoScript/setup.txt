@@ -1,2 +1,25 @@
 plugin.tx_f2contentce.settings {
+	feed {
+		maxEntries = 3
+		preFeed = COA
+		preFeedt {
+			10 = TEXT
+			10.value =
+		}
+		postFeed = COA
+		postFeed {
+			10 = TEXT
+			10.value =
+		}
+		preContent = COA
+		preContent {
+			10 = TEXT
+			10.value =
+		}
+		postContent = COA
+		postContent {
+			10 = TEXT
+			10.value = <hr />
+		}
+	}
 }
