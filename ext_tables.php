@@ -18,6 +18,12 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'f2contentce Video'
 );
 
+Tx_Extbase_Utility_Extension::registerPlugin(
+	$_EXTKEY,
+	'Gallery',
+	'f2contentce Gallery'
+);
+
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'f2contentce');
 
 // Flexform para Feeds
@@ -29,5 +35,8 @@ t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_video', 'FILE:EXT:' . $_EXTKEY . '/C
 // Flexform para Google Maps
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_gmaps'] = 'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gmaps', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_gmaps.xml');
+// Flexform para Galerias de fotos
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_gallery'] = 'pi_flexform';
+t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gallery', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_gallery.xml');
 
 ?>

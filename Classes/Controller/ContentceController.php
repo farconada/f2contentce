@@ -36,22 +36,10 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 
 
-	/**
-	 * (non-PHPdoc)
-	 *
-	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
-	 * @return void
-	 */
-	protected function initializeAction(){
+	public function cycleGalleryAction() {
 
 	}
 
-		// TODO Photo Gallery
-	public function photoGalleryAction() {
-
-	}
-
-		// TODO YouTube video
 	public function youtubeAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
 		$video['id'] = $this->settings['videoId'];
@@ -124,7 +112,6 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	}
 
-	// TODO Accion para mostrar un CE de Google maps sencillo
 	/**
 	 * Enter description here ...
 	 *
@@ -137,7 +124,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$map['latlong'] =
 			t3lib_div::intval_positive($this->settings['latitude']) . ',' .
 			t3lib_div::intval_positive($this->settings['longitude']);
-		$map['kml'] = $this->settings['kml'];
+		$map['kml'] = $this->addBaseUriIfNecessary( $this->settings['kml']);
 
 		$this->response->addAdditionalHeaderData('
 			<style>
@@ -153,15 +140,5 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$this->view->assign('map', $map);
 	}
 
-	/**
-	 * Convierte un Objeto a un string sin tags HTML
-	 *
-	 * @param 	Object	$object 	Element elemento a convertir
-	 * @return	String	Cadena sin tags HTML
-	 *
-	 */
-	private function objectToPlainText($object) {
-		return strip_tags($object.'');
-	}
 }
 ?>
