@@ -1,0 +1,41 @@
+<h1>Google Maps</h1>
+<div id="{map.id}"></div>
+<script type="text/javascript">
+(function() {
+	window.onload = function() {
+		var mapDiv = document.getElementById('{map.id}');
+		var zoom = {map.zoom}
+		var latlng = new google.maps.LatLng({map.latlong});
+		var options = {
+			 center: latlng,
+			 zoom: zoom,
+			 mapTypeId: google.maps.MapTypeId.ROADMAP,
+			 mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+				position: google.maps.ControlPosition.TOP,
+				},
+			navigationControl: true,
+			navigationControlOptions: {
+			style: google.maps.NavigationControlStyle.ANDROID
+			 }
+		};
+		var map = new google.maps.Map(mapDiv, options);
+		// Adding a marker to the map
+		<![CDATA[
+		var marker = new google.maps.Marker(
+		{
+			position: latlng,
+			map: map
+		});
+		]]>
+		<f:if condition="{map.kml}">
+		<f:then>
+			var kmlLayer = new google.maps.KmlLayer('{map.kml}');
+			kmlLayer.setMap(map);
+		</f:then>
+		</f:if>
+
+
+	}
+})();
+</script>

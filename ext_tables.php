@@ -26,5 +26,8 @@ t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_feed', 'FILE:EXT:' . $_EXTKEY . '/Co
 // Flexform para Video
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_video'] = 'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_video', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_video.xml');
+// Flexform para Google Maps
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_gmaps'] = 'pi_flexform';
+t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gmaps', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_gmaps.xml');
 
 ?>

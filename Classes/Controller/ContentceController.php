@@ -53,13 +53,17 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 		// TODO YouTube video
 	public function youtubeAction() {
-		$video['height'] = $this->settings['height'];
+		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
 		$video['id'] = $this->settings['videoId'];
 		$this->view->assign('video', $video);
 	}
-	// TODO Vimeo Video
+
+	/**
+	 *
+	 * Enter description here ...
+	 */
 	public function vimeoAction() {
-		$video['height'] = $this->settings['height'];
+		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
 		$video['id'] = $this->settings['videoId'];
 		$this->view->assign('video', $video);
 
@@ -76,9 +80,9 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$feedArray = NULL;
 		$myEntries = array();
 
+		$url = $this->settings['url'];
 		try {
-				// TODO parametrizar URL en un Flexform
-			$feedLinks = Zend_Feed_Reader::findFeedLinks('http://www.f1aldia.com');
+			$feedLinks = Zend_Feed_Reader::findFeedLinks($url);
 		} catch (Exception $e) {
 			$this->flashMessages->add('Error: ha habido un problema en el servidor al recuperar el feed');
 			return;
@@ -122,12 +126,33 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	// TODO Accion para mostrar un CE de Google maps sencillo
 	/**
-	 *
 	 * Enter description here ...
+	 *
 	 */
 	public function gmapsAction() {
+		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&language=es"></script>');
 
+		$map['id'] = 'map-'.md5(time());
+		$map['zoom'] = t3lib_div::intval_positive($this->settings['zoom']);
+		$map['latlong'] =
+			t3lib_div::intval_positive($this->settings['latitude']) . ',' .
+			t3lib_div::intval_positive($this->settings['longitude']);
+		$map['kml'] = $this->settings['kml'];
+
+		$this->response->addAdditionalHeaderData('
+			<style>
+			#'.$map['id'].'
+					{
+					width: 100%;
+					border: 1px solid #000;
+					height:'.t3lib_div::intval_positive($this->settings['height']).'px;
+			}
+			</style>
+		');
+
+		$this->view->assign('map', $map);
 	}
+
 	/**
 	 * Convierte un Objeto a un string sin tags HTML
 	 *
