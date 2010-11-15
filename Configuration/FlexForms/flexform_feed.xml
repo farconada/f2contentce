@@ -6,8 +6,8 @@
 				<TCEforms>
 					<label>URL with RSS or ATOM feeds</label>
 					<config>
-						<type>input</type>
-					</config>
+					<type>input</type>
+				</config>
 				</TCEforms>
 			</settings.url>
 			</el>

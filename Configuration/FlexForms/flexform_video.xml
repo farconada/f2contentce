@@ -31,6 +31,7 @@
 					<label>Video ID</label>
 					<config>
 						<type>input</type>
+						<eval>trim,nospace</eval>
 					</config>
 				</TCEforms>
 			</settings.videoId>
@@ -39,7 +40,9 @@
 					<label>Height</label>
 					<config>
 						<type>input</type>
-						<default>225</default>
+						<default>300</default>
+						<eval>num</eval>
+						<size>2</size>
 					</config>
 				</TCEforms>
 			</settings.height>
