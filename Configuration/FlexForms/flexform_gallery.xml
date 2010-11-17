@@ -3,7 +3,7 @@
 	<ROOT>
 		<type>array</type>
 		<el>
-			<displayTime>
+			<settings.displayTime>
 				<TCEforms>
 					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.displayTime</label>
 					<config>
@@ -12,8 +12,8 @@
 						<default>3</default>
 					</config>
 				</TCEforms>
-			</displayTime>
-			<transition>
+			</settings.displayTime>
+			<settings.transition>
 				<TCEforms>
 					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.transitionStyle</label>
 					<config>
@@ -46,8 +46,8 @@
 						</items>
 					</config>
 				</TCEforms>
-			</transition>
-			<resolution>
+			</settings.transition>
+			<settings.resolution>
 				<TCEforms>
 					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.aspectRatio</label>
 					<config>
@@ -69,8 +69,8 @@
 					</config>
 					<onChange>reload</onChange>
 				</TCEforms>
-			</resolution>
-			<height>
+			</settings.resolution>
+			<settings.height>
 				<TCEforms>
 					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.height</label>
 					<config type="array">
@@ -80,8 +80,8 @@
 					</config>
 					<displayCond>FIELD:resolution:=:custom</displayCond>
 				</TCEforms>
-			</height>
-			<width>
+			</settings.height>
+			<settings.width>
 				<TCEforms>
 					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.width</label>
 					<config type="array">
@@ -91,8 +91,8 @@
 					</config>
 					<displayCond>FIELD:resolution:=:custom</displayCond>
 				</TCEforms>
-			</width>
-			<thumbnails>
+			</settings.width>
+			<settings.thumbnails>
 				<TCEforms>
 					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.thumbnails</label>
 					<config type="array">
@@ -117,8 +117,8 @@
 						</items>
 					</config>
 				</TCEforms>
-			</thumbnails>
-			<images>
+			</settings.thumbnails>
+			<settings.images>
 				<section>1</section>
 				<type>array</type>
 				<el>
@@ -136,7 +136,7 @@
 										<internal_type>file</internal_type>
 										<allowed>gif,jpg,jpeg,tif,bmp,pcx,tga,png,pdf,ai</allowed>
 										<max_size>5000</max_size>
-										<uploadfolder>uploads/tx_weccontentelements/slideshow</uploadfolder>
+										<uploadfolder>uploads/f2contentce/cyclegallery</uploadfolder>
 										<maxitems>1</maxitems>
 										<size>1</size>
 										<selectedListStyle>width:200px</selectedListStyle>
@@ -165,7 +165,7 @@
 						</el>
 					</image>
 				</el>
-			</images>
+			</settings.images>
 		</el>
 	</ROOT>
 </T3DataStructure>

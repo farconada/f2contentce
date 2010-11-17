@@ -37,7 +37,8 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 
 	public function cycleGalleryAction() {
-
+		// no se puede terminar hasta tener extbase 1.3
+		t3lib_div::debug($this->settings);
 	}
 
 	public function youtubeAction() {
