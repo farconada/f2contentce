@@ -1,0 +1,47 @@
+templavoila.wizards.newContentElement.renderMode = tabs
+
+tmp.wizards < templavoila.wizards.newContentElement.wizardItems
+templavoila.wizards.newContentElement.wizardItems >
+
+templavoila.wizards.newContentElement.wizardItems {
+		common < tmp.wizards.common
+		common.show = text,textpic,image,media,bullets,uploads
+		common.header = Common content elements
+
+		advanced {
+				header = Advanced CE
+				elements {
+						f2contentce_feed {
+								title = RSS/Atom Feed
+								description = Displays RSS/Atom Feed from blogs, Twitter ...
+								icon = ../typo3conf/ext/f2contentce/Resources/Public/Icons/rss.gif
+								tt_content_defValues {
+										CType = f2contentce_feed
+								}
+						}
+						f2contentce_gmaps {
+								title = Simple Google Maps
+								description = Google Maps marker + KML file
+								icon = ../typo3conf/ext/f2contentce/Resources/Public/Icons/map.png
+								tt_content_defValues {
+										CType = f2contentce_gmaps
+								}
+						}
+
+						html < tmp.wizards.special.elements.html
+						menu < tmp.wizards.special.elements.menu
+						table < tmp.wizards.common.elements.table
+						search < tmp.wizards.forms.elements.search
+						login < tmp.wizards.forms.elements.login
+
+					}
+
+					show = *
+		}
+
+		plugins < tmp.wizards.plugins
+		plugins.header = Special content elements
+
+		fce < tmp.wizards.fce
+		fce.header = Flexible content
+}

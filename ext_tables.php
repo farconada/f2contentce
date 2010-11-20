@@ -39,4 +39,11 @@ t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gmaps', 'FILE:EXT:' . $_EXTKEY . '/C
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_gallery'] = 'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gallery', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_gallery.xml');
 
+// Extbase < 1.3
+t3lib_extMgm::addPlugin(array('Feed', 'f2contentce_feed'), 'CType');
+t3lib_extMgm::addPlugin(array('Google Maps', 'f2contentce_gmaps'), 'CType');
+$TCA['tt_content']['types']['f2contentce_feed']['showitem'] = 'CType;;4;button;1-1-1, header;;3;;2-2-2,pi_flexform;;;;1-1-1';
+$TCA['tt_content']['types']['f2contentce_gmaps']['showitem'] = 'CType;;4;button;1-1-1, header;;3;;2-2-2,pi_flexform;;;;1-1-1';
+
+
 ?>
