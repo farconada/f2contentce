@@ -45,11 +45,5 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	)
 );
 
-// Extbase < 1.3
-t3lib_extMgm::addTypoScript($_EXTKEY,'setup',
-		'[GLOBAL]
-		tt_content.f2contentce_feed < tt_content.list.20.f2contentce_feed
-		tt_content.f2contentce_gmaps < tt_content.list.20.f2contentce_gmaps',
-		true
-);
+
 ?>
