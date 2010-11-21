@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the f2portfolio extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="feed_wiz_title">Feed</label>
+			<label index="feed_wiz_description">Adds a RSS/Atom feed</label>
+			<label index="gmaps_wiz_title">Google Maps</label>
+			<label index="gmaps_wiz_description">Google maps marker plus a KML file</label>
+			<label index="video_wiz_title">Video</label>
+			<label index="video_wiz_description">Displays videos from YouTube or Vimeo</label>
+			<label index="gallery_wiz_title">Gallery</label>
+			<label index="gallery_wiz_description">Simple image animated gallery for images</label>
+		</languageKey>
+	</data>
+</T3locallang>
