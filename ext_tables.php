@@ -17,12 +17,13 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'Video',
 	'f2contentce Video'
 );
-
+/*
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
 	'Gallery',
 	'f2contentce Gallery'
 );
+*/
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'f2contentce');
 
