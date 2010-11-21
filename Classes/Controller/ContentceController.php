@@ -25,6 +25,7 @@
 
 require_once 'Zend/Feed/Reader.php';
 require_once 'Zend/Gdata/YouTube.php';
+require_once 'Zend/Rest/Client.php';
 
 /**
  * Controller for the ContentCE object
@@ -43,6 +44,37 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	}
 
 	public function flickrAction() {
+		// initialize client with data set
+		$client = new Zend_Rest_Client('http://api.flickr.com/services/rest/');
+	
+		// set method name and API key
+		$client->method('flickr.photosets.getList');
+		$client->api_key(API_KEY);
+	
+		// set method arguments
+		$client->user_id($_POST['uid']);
+	
+		// perform request and process respone
+		try {
+			$list = $client->get();
+			unset($client);
+			$results = array();
+			foreach ($list->photosets->photoset as $photoset) {
+				$id = (string)$photoset['id'];
+				$client = new Zend_Rest_Client('http://api.flickr.com/services/rest/');
+				$client->method('flickr.photosets.getPhotos');
+				$client->api_key('6ee7b36e3cf8ee4aac8cdb61047eb3b8');
+				$client->photoset_id($id);
+				$client->format('php_serial');
+				$results[$id] = array();
+				$results[$id]['title'] = (string)$photoset->title;
+				$results[$id]['data'] = $client->get();
+				unset($client);
+			}
+		} catch (Exception $e) {
+			die('ERROR: ' . $e->getMessage());
+		}
+
 
 	}
 	public function youtubeAction() {
