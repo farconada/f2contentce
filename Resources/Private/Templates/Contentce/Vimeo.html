@@ -1,9 +1,17 @@
 <div class="f2vimeo">
-		<object class="vimeovideo" style="height: {video.height}px"
+		<object class="vimeovideo" style="height: {video.height}px; width: {video.width}%"
 			data="http://www.vimeo.com/moogaloop.swf?clip_id={video.id}&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1"
 			type="application/x-shockwave-flash">
 			<param name="allowfullscreen" value="true" />
 			<param name="allowscriptaccess" value="always" />
 			<param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id={video.id}&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" />
 		</object>
+		<f:if condition="{metadata}">
+			<f:then>
+				<div class="metadata">
+					<span class="comments">This video has {metadata.stats_number_of_comments} comments</span><span class="plays"> and it was played {metadata.stats_number_of_plays} times.</span>
+					<a href="{metadata.url}">Watch on Vimeo</a>
+				</div>
+			</f:then>
+		</f:if>
 </div>

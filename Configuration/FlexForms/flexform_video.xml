@@ -12,16 +12,16 @@
 				 <TCEforms>
 					<label>Seleccione un proveedor de video</label>
 					<config>
-					<type>select</type>
-					<items>
-						<numIndex index="0">
-							 <numIndex index="0">YouTube</numIndex>
-							 <numIndex index="1">Contentce->youtube</numIndex>
-						</numIndex>
-						<numIndex index="1">
-							 <numIndex index="0">Vimeo</numIndex>
-							 <numIndex index="1">Contentce->vimeo</numIndex>
-						</numIndex>
+						<type>select</type>
+						<items>
+							<numIndex index="0">
+								 <numIndex index="0">YouTube</numIndex>
+								 <numIndex index="1">Contentce->youtube</numIndex>
+							</numIndex>
+							<numIndex index="1">
+								 <numIndex index="0">Vimeo</numIndex>
+								 <numIndex index="1">Contentce->vimeo</numIndex>
+							</numIndex>
 						</items>
 					</config>
 				 </TCEforms>
@@ -37,7 +37,7 @@
 			</settings.videoId>
 			<settings.height>
 				<TCEforms>
-					<label>Height</label>
+					<label>Height in px</label>
 					<config>
 						<type>input</type>
 						<default>300</default>
@@ -46,6 +46,37 @@
 					</config>
 				</TCEforms>
 			</settings.height>
+			<settings.width>
+				<TCEforms>
+					<label>Width in %</label>
+					<config>
+						<type>input</type>
+						<default>100</default>
+						<eval>num</eval>
+						<size>2</size>
+					</config>
+				</TCEforms>
+			</settings.width>>
+			<settings.showMetadata>
+				<TCEforms>
+					<label>Display metadata (number of comments, visits...):</label>
+					<config>
+						<type>radio</type>
+						<eval>num</eval>
+						<items>
+							<numIndex index="0">
+								 <numIndex index="0">Yes</numIndex>
+								 <numIndex index="1">1</numIndex>
+							</numIndex>
+							<numIndex index="1">
+								 <numIndex index="0">No</numIndex>
+								 <numIndex index="1">0</numIndex>
+							</numIndex>
+						</items>
+						<default>0</default>
+					</config>
+				</TCEforms>
+			</settings.showMetadata>
 			</el>
 		 </ROOT>
 	</sDEF>

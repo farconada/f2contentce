@@ -53,9 +53,19 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	 */
 	public function vimeoAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
+		$video['width'] = t3lib_div::intval_positive($this->settings['width']);
 		$video['id'] = $this->settings['videoId'];
 		$this->view->assign('video', $video);
 
+		if( $this->settings['showMetadata']) {
+			$apiUrl = 'http://vimeo.com/api/v2/video/'.$video['id'].'.php';
+			$curl = curl_init($apiUrl);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			$metadata = unserialize(curl_exec($curl));
+				// Use only the first item of the array if exists
+			$metadata = is_array($metadata) ? $metadata[0]: NULL;
+			$this->view->assign('metadata', $metadata);
+		}
 	}
 
 
