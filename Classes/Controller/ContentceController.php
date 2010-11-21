@@ -24,6 +24,7 @@
 ***************************************************************/
 
 require_once 'Zend/Feed/Reader.php';
+require_once 'Zend/Gdata/YouTube.php';
 
 /**
  * Controller for the ContentCE object
@@ -43,8 +44,24 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	public function youtubeAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
+		$video['width'] = t3lib_div::intval_positive($this->settings['width']);
 		$video['id'] = $this->settings['videoId'];
 		$this->view->assign('video', $video);
+
+		if( $this->settings['showMetadata']) {
+			$yt = new Zend_Gdata_YouTube();
+			try {
+				$youtubeVideo = $yt->getVideoEntry($video['id']);
+			} catch (Exception $e) {
+				$this->flashMessages->add('Error: ha habido un problema en el servidor al recuperar la informacion del video');
+				return;
+			}
+			$metadata['viewCount'] = $youtubeVideo->getStatistics()->getViewCount();
+			$metadata['comments'] = count($youtubeVideo->getComments());
+			$metadata['url'] = $youtubeVideo->getVideoWatchPageUrl();
+			$this->view->assign('metadata', $metadata);
+
+		}
 	}
 
 	/**
