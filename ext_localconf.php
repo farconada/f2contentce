@@ -1,5 +1,6 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
+// TODO hacer que las acciones sean cacheables
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
@@ -20,6 +21,17 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	),
 	array(
 		'Contentce' => 'gmaps',
+	)
+);
+
+Tx_Extbase_Utility_Extension::configurePlugin(
+	$_EXTKEY,
+	'Flickr',
+	array(
+		'Contentce' => 'flickr',
+	),
+	array(
+		'Contentce' => 'flickr',
 	)
 );
 

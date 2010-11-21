@@ -42,6 +42,9 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		t3lib_div::debug($this->settings);
 	}
 
+	public function flickrAction() {
+
+	}
 	public function youtubeAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
 		$video['width'] = t3lib_div::intval_positive($this->settings['width']);

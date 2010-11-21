@@ -17,6 +17,11 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'Video',
 	'f2contentce Video'
 );
+Tx_Extbase_Utility_Extension::registerPlugin(
+	$_EXTKEY,
+	'Flickr',
+	'f2contentce Flickr'
+);
 /*
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
@@ -39,6 +44,9 @@ t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gmaps', 'FILE:EXT:' . $_EXTKEY . '/C
 // Flexform para Galerias de fotos
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_gallery'] = 'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gallery', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_gallery.xml');
+// Flexform para Galerias de Flickr
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_flickr'] = 'pi_flexform';
+t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gallery', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_flickr.xml');
 
 if (TYPO3_MODE == 'BE')	{
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_f2contentce_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'Classes/Util/class.tx_f2contentce_wizicon.php';
