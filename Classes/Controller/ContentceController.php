@@ -43,40 +43,63 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		t3lib_div::debug($this->settings);
 	}
 
+	public function twitterAction(){
+
+	}
 	public function flickrAction() {
-		// initialize client with data set
-		$client = new Zend_Rest_Client('http://api.flickr.com/services/rest/');
-	
-		// set method name and API key
-		$client->method('flickr.photosets.getList');
-		$client->api_key(API_KEY);
-	
-		// set method arguments
-		$client->user_id($_POST['uid']);
-	
-		// perform request and process respone
+		// TODO refactorizar para extraer una clase
+		$feedArray = NULL;
+		$myEntries = array();
+
+		$url = $this->settings['url'];
 		try {
-			$list = $client->get();
-			unset($client);
-			$results = array();
-			foreach ($list->photosets->photoset as $photoset) {
-				$id = (string)$photoset['id'];
-				$client = new Zend_Rest_Client('http://api.flickr.com/services/rest/');
-				$client->method('flickr.photosets.getPhotos');
-				$client->api_key('6ee7b36e3cf8ee4aac8cdb61047eb3b8');
-				$client->photoset_id($id);
-				$client->format('php_serial');
-				$results[$id] = array();
-				$results[$id]['title'] = (string)$photoset->title;
-				$results[$id]['data'] = $client->get();
-				unset($client);
-			}
+			$feedLinks = Zend_Feed_Reader::findFeedLinks($url);
 		} catch (Exception $e) {
-			die('ERROR: ' . $e->getMessage());
+			$this->flashMessages->add('Error: ha habido un problema en el servidor al recuperar el feed');
+			return;
+		}
+
+		if (count($feedLinks) == 0) {
+			$this->flashMessages->add('No hay feeds que recuperar');
+			return;
+		}
+
+		foreach ($feedLinks as $feedLink) {
+				// una pagina puede tener mas de un feed aunque solo se usa el primero
+			$feed = Zend_Feed_Reader::import($feedLink['href']);
+			foreach ($feed as $entry) {
+
+				$edata = array(
+						'title'        => strip_tags($entry->getTitle()),
+						'description'  => strip_tags($entry->getDescription()),
+						'date' => $entry->getDateModified()->toString('d-M-y'),
+						'author'      => is_array($entry->getAuthors()) ? implode(' , ', $entry->getAuthors()): $entry->getAuthors(),
+						'link'         => $entry->getLink(),
+						'enclosure'		=> $entry->getEnclosure()->url,
+						'photo'			=> preg_match('/http:\/\/farm.*_m.jpg/',$entry->getContent(),$matches) ? $matches[0]: NULL,
+						'content'      => strip_tags($entry->getContent())
+				);
+				$data[] = $edata;
+			}
+			break;
 		}
 
 
+
+
+			// Limitar las entradas del feed
+		$maxEntries = t3lib_div::intval_positive($this->settings['feed']['maxEntries']);
+		if ($maxEntries && count($data) > $maxEntries) {
+				$data = array_slice($data, 0, $maxEntries);
+		}
+		$this->view->assign('feedEntries', $data);
+
+
+
+
+
 	}
+
 	public function youtubeAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
 		$video['width'] = t3lib_div::intval_positive($this->settings['width']);

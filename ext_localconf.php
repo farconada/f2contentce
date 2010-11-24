@@ -6,10 +6,10 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'Feed',
 	array(
-		'Contentce' => 'feed',
+		'Contentce' => 'feed,flickr,twitter',
 	),
 	array(
-		'Contentce' => 'feed',
+		'Contentce' => 'feed,flickr,twitter',
 	)
 );
 
@@ -24,25 +24,16 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	)
 );
 
-Tx_Extbase_Utility_Extension::configurePlugin(
-	$_EXTKEY,
-	'Flickr',
-	array(
-		'Contentce' => 'flickr',
-	),
-	array(
-		'Contentce' => 'flickr',
-	)
-);
+
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'Video',
 	array(
-		'Contentce' => 'vimeo,youtube,googlevideo',
+		'Contentce' => 'vimeo,youtube',
 	),
 	array(
-		'Contentce' => 'vimeo,youtube,googlevideo',
+		'Contentce' => 'vimeo,youtube',
 	)
 );
 
