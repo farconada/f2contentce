@@ -3,8 +3,8 @@ require_once 'Zend/Feed/Reader.php';
 
 class Tx_F2contentce_Service_FeedParser {
 	private $url;
-	private $mapperFunction;
-	private $maxEntries;
+	private $arrayMapperFunction;
+	private $maxEntries = 9999;
 
 	public function __construct($url) {
 		$this->url = $url;
@@ -12,7 +12,7 @@ class Tx_F2contentce_Service_FeedParser {
 	}
 
 	public function setArrayMapperFunction($function){
-		$this->mapperFunction = $function;
+		$this->arrayMapperFunction = $function;
 	}
 
 	public function setMaxEntries ($max) {
@@ -22,8 +22,9 @@ class Tx_F2contentce_Service_FeedParser {
 	public function getEntriesAsArray(){
 		$entries = array();
 		foreach ($this->getEntries() as $entry) {
-			$entries[] = is_callable($this->mapperFunction)? $this->mapperFunction($entry): $entry;
+			$entries[] = is_callable($this->arrayMapperFunction)? call_user_func($this->arrayMapperFunction, $entry): $entry;
 		}
+		return $entries;
 	}
 
 	private function getFeedLink() {
@@ -46,8 +47,14 @@ class Tx_F2contentce_Service_FeedParser {
 
 	}
 	private function getEntries(){
-		var_dump(Zend_Feed_Reader::import($this->getFeedLink()));
-		return Zend_Feed_Reader::import($this->getFeedLink());
+		$entries = Zend_Feed_Reader::import($this->getFeedLink());
+		$entriesInArray = array();
+		do {
+			$entriesInArray[] = $entries->current();
+			$entries->next();
+		} while ((count($entriesInArray) < $this->maxEntries) && $entries->current());
+
+		return $entriesInArray;
 	}
 }
 ?>
