@@ -6,10 +6,10 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'Feed',
 	array(
-		'Contentce' => 'feed,flickr,twitter',
+		'Contentce' => 'feed,flickr',
 	),
 	array(
-		'Contentce' => 'feed,flickr,twitter',
+		'Contentce' => 'feed,flickr',
 	)
 );
 

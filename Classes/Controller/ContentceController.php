@@ -47,6 +47,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	}
 	public function flickrAction() {
+		$this->addJs();
 		$feedParser = new Tx_F2contentce_Service_FeedParser($this->settings['url']);
 		$feedParser->setMaxEntries($this->settings['feed']['maxEntries']);
 		$feedParser->setArrayMapperFunction( function($entry){
@@ -76,7 +77,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$video['id'] = $this->settings['videoId'];
 		$this->view->assign('video', $video);
 
-		if( $this->settings['showMetadata']) {
+		if ($this->settings['showMetadata']) {
 			$yt = new Zend_Gdata_YouTube();
 			try {
 				$youtubeVideo = $yt->getVideoEntry($video['id']);
@@ -102,7 +103,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$video['id'] = $this->settings['videoId'];
 		$this->view->assign('video', $video);
 
-		if( $this->settings['showMetadata']) {
+		if ($this->settings['showMetadata']) {
 			$apiUrl = 'http://vimeo.com/api/v2/video/'.$video['id'].'.php';
 			$curl = curl_init($apiUrl);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -123,16 +124,30 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	public function feedAction() {
 		$feedParser = new Tx_F2contentce_Service_FeedParser($this->settings['url']);
 		$feedParser->setMaxEntries($this->settings['feed']['maxEntries']);
-		$feedParser->setArrayMapperFunction( function($entry){
-			return array(
-						'title'        => strip_tags($entry->getTitle()),
-						'description'  => strip_tags($entry->getDescription()),
-						'date' => $entry->getDateModified()->toString('d-M-y'),
-						'author'      => is_array($entry->getAuthors()) ? implode(' , ', $entry->getAuthors()): $entry->getAuthors(),
-						'link'         => $entry->getLink(),
-						'content'      => strip_tags($entry->getContent())
-				);
-		});
+		if ($this->settings['feed']['stripHtmlTags']) {
+			$feedParser->setArrayMapperFunction( function($entry){
+				return array(
+							'title'        => strip_tags($entry->getTitle()),
+							'description'  => strip_tags($entry->getDescription()),
+							'date' => $entry->getDateModified()->toString('d-M-y'),
+							'author'      => is_array($entry->getAuthors()) ? implode(' , ', $entry->getAuthors()): $entry->getAuthors(),
+							'link'         => $entry->getLink(),
+							'content'      => strip_tags($entry->getContent())
+					);
+			});
+		} else {
+			$feedParser->setArrayMapperFunction( function($entry){
+				return array(
+							'title'        => $entry->getTitle(),
+							'description'  => $entry->getDescription(),
+							'date' => $entry->getDateModified()->toString('d-M-y'),
+							'author'      => is_array($entry->getAuthors()) ? implode(' , ', $entry->getAuthors()): $entry->getAuthors(),
+							'link'         => $entry->getLink(),
+							'content'      => $entry->getContent()
+					);
+			});
+
+		}
 
 		try {
 			$data = $feedParser->getEntriesAsArray();
@@ -169,6 +184,38 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		');
 
 		$this->view->assign('map', $map);
+	}
+	/* Adds a CSS file if configured for that view if TypoScript
+	 *
+	*/
+	private function addStylesheet(){
+			$stylesheet = $this->settings[$this->request->getControllerActionName()]['stylesheet'];
+				// "EXT:" shortcut replaced with the extension path
+			$stylesheet = str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $stylesheet);
+
+				// different solution to add the css if the action is cached or uncached
+			if ($this->request->isCached()) {
+					$GLOBALS['TSFE']->getPageRenderer()->addCssFile($stylesheet);
+			} else {
+
+					$this->response->addAdditionalHeaderData('<link rel="stylesheet" type="text/css" href="'.
+									$stylesheet.'" media="all" />');
+			}
+	}
+
+	private function addJs(){
+			$js = $this->settings[$this->request->getControllerActionName()]['js'];
+				// "EXT:" shortcut replaced with the extension path
+			$js = str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $js);
+
+				// different solution to add the css if the action is cached or uncached
+			if ($this->request->isCached()) {
+					$GLOBALS['TSFE']->getPageRenderer()->addJsFile($js);
+			} else {
+
+					$this->response->addAdditionalHeaderData('<script src="'.
+									$stylesheet.'" type="text/javascript" />');
+			}
 	}
 
 }

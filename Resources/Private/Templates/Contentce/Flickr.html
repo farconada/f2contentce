@@ -3,11 +3,9 @@
 <f:then>
 	<div class="f2contentce feedEntries flickr">
 		<f:cObject typoscriptObjectPath="plugin.tx_f2contentce.settings.feed.preFeed"></f:cObject>
-		<ul>
 			<f:for each="{feedEntries}" as="entry">
-				<li><img src="{entry.photo}" alt="{entry.title}" /></li>
+				<img src="{entry.photo}" alt="{entry.title}" />
 			</f:for>
-		</ul>
 		<f:cObject typoscriptObjectPath="plugin.tx_f2contentce.settings.feed.postFeed"></f:cObject>
 	</div>
 </f:then>

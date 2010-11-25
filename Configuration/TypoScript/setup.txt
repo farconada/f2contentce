@@ -1,5 +1,6 @@
 plugin.tx_f2contentce.settings {
 	feed {
+		stripHtmlTags = 1
 		maxEntries = 3
 		preFeed = COA
 		preFeedt {
