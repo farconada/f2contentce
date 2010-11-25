@@ -47,57 +47,27 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	}
 	public function flickrAction() {
-		// TODO refactorizar para extraer una clase
-		$feedArray = NULL;
-		$myEntries = array();
-
-		$url = $this->settings['url'];
-		try {
-			$feedLinks = Zend_Feed_Reader::findFeedLinks($url);
-		} catch (Exception $e) {
-			$this->flashMessages->add('Error: ha habido un problema en el servidor al recuperar el feed');
-			return;
-		}
-
-		if (count($feedLinks) == 0) {
-			$this->flashMessages->add('No hay feeds que recuperar');
-			return;
-		}
-
-		foreach ($feedLinks as $feedLink) {
-				// una pagina puede tener mas de un feed aunque solo se usa el primero
-			$feed = Zend_Feed_Reader::import($feedLink['href']);
-			foreach ($feed as $entry) {
-
-				$edata = array(
+		$feedParser = new Tx_F2contentce_Service_FeedParser($this->settings['url']);
+		$feedParser->setMaxEntries($this->settings['feed']['maxEntries']);
+		$feedParser->setArrayMapperFunction( function($entry){
+			return array(
 						'title'        => strip_tags($entry->getTitle()),
 						'description'  => strip_tags($entry->getDescription()),
 						'date' => $entry->getDateModified()->toString('d-M-y'),
 						'author'      => is_array($entry->getAuthors()) ? implode(' , ', $entry->getAuthors()): $entry->getAuthors(),
 						'link'         => $entry->getLink(),
 						'enclosure'		=> $entry->getEnclosure()->url,
-						'photo'			=> preg_match('/http:\/\/farm.*_m.jpg/',$entry->getContent(),$matches) ? $matches[0]: NULL,
+						'photo'			=> preg_match('/http:\/\/farm.*_m.jpg/', $entry->getContent(), $matches) ? $matches[0]: NULL,
 						'content'      => strip_tags($entry->getContent())
 				);
-				$data[] = $edata;
-			}
-			break;
+		});
+
+		try {
+			$data = $feedParser->getEntriesAsArray();
+			$this->view->assign('feedEntries', $data);
+		} catch (Exception $e) {
+			$this->flashMessages->add($e->getMessage());
 		}
-
-
-
-
-			// Limitar las entradas del feed
-		$maxEntries = t3lib_div::intval_positive($this->settings['feed']['maxEntries']);
-		if ($maxEntries && count($data) > $maxEntries) {
-				$data = array_slice($data, 0, $maxEntries);
-		}
-		$this->view->assign('feedEntries', $data);
-
-
-
-
-
 	}
 
 	public function youtubeAction() {
