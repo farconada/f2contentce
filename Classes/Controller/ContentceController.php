@@ -52,7 +52,8 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/JavaScript/jquery.cycle.lite.min.js"></script>');
 		$feedParser = new Tx_F2contentce_Service_FeedParser($this->settings['url']);
 		$feedParser->setMaxEntries($this->settings['feed']['maxEntries']);
-		$feedParser->setArrayMapperFunction( function($entry){
+
+		$feedParser->setArrayMapperFunction( function($entry, $otherArgs){
 			return array(
 						'title'        => strip_tags($entry->getTitle()),
 						'description'  => strip_tags($entry->getDescription()),
@@ -67,6 +68,10 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 		try {
 			$data = $feedParser->getEntriesAsArray();
+				// Se cambia el tamaño de las fotos al seleccionado
+			foreach ($data as $key => $photo) {
+				$data[$key]['photo'] = preg_replace('/_m.jpg/', '_'.$this->settings['flickrPhotoSize'].'.jpg', $data[$key]['photo']);
+			}
 			$this->view->assign('feedEntries', $data);
 		} catch (Exception $e) {
 			$this->flashMessages->add($e->getMessage());

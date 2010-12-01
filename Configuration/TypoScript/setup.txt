@@ -3,7 +3,7 @@ plugin.tx_f2contentce.settings {
 		stripHtmlTags = 1
 		maxEntries = 3
 		preFeed = COA
-		preFeedt {
+		preFeed {
 			10 = TEXT
 			10.value =
 		}

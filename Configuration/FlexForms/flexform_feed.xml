@@ -28,6 +28,29 @@
 				</config>
 				</TCEforms>
 			</settings.url>
+			<settings.flickrPhotoSize>
+				 <TCEforms>
+					<label>Tamaño de las fotos (segun Flickr)</label>
+					<displayCond>FIELD:switchableControllerActions:=:Contentce->flickr</displayCond>
+					<config>
+						<type>select</type>
+						<items>
+							<numIndex index="0">
+								 <numIndex index="0">Pequeño</numIndex>
+								 <numIndex index="1">m</numIndex>
+							</numIndex>
+							<numIndex index="1">
+								 <numIndex index="0">Mediano</numIndex>
+								 <numIndex index="1">z</numIndex>
+							</numIndex>
+							<numIndex index="2">
+								 <numIndex index="0">Grande</numIndex>
+								 <numIndex index="1">b</numIndex>
+							</numIndex>
+						</items>
+					</config>
+				 </TCEforms>
+			</settings.flickrPhotoSize>
 			</el>
 		 </ROOT>
 </T3DataStructure>
