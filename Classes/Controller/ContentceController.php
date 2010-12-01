@@ -43,11 +43,13 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		t3lib_div::debug($this->settings);
 	}
 
-	public function twitterAction(){
-
-	}
+	/**
+	 * CE galeria sencilla de Flickr
+	 *
+	 * @return void
+	 */
 	public function flickrAction() {
-		$this->addJs();
+		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/JavaScript/jquery.cycle.lite.min.js"></script>');
 		$feedParser = new Tx_F2contentce_Service_FeedParser($this->settings['url']);
 		$feedParser->setMaxEntries($this->settings['feed']['maxEntries']);
 		$feedParser->setArrayMapperFunction( function($entry){
@@ -68,9 +70,22 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 			$this->view->assign('feedEntries', $data);
 		} catch (Exception $e) {
 			$this->flashMessages->add($e->getMessage());
+			return ;
 		}
+		$this->response->addAdditionalHeaderData("
+			<script type=\"text/javascript\">
+				$(function() {
+					$('.f2contentce.feedEntries.flickr').cycle();
+				});
+			</script>
+		");
 	}
 
+	/**
+	 * CE video de YouTube con metadatos
+	 *
+	 * @return void
+	 */
 	public function youtubeAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
 		$video['width'] = t3lib_div::intval_positive($this->settings['width']);
@@ -94,8 +109,9 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	}
 
 	/**
+	 * CE video de Vimeo con metadatos
 	 *
-	 * Enter description here ...
+	 * @return void
 	 */
 	public function vimeoAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
@@ -159,8 +175,9 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	}
 
 	/**
-	 * Enter description here ...
+	 * CE GoogleMaps: marker + KML
 	 *
+	 * @return void
 	 */
 	public function gmapsAction() {
 		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&language=es"></script>');
@@ -172,6 +189,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 			t3lib_div::intval_positive($this->settings['longitude']);
 		$map['kml'] = $this->addBaseUriIfNecessary( $this->settings['kml']);
 
+			// refactorizable?
 		$this->response->addAdditionalHeaderData('
 			<style>
 			#'.$map['id'].'
@@ -185,9 +203,11 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 		$this->view->assign('map', $map);
 	}
-	/* Adds a CSS file if configured for that view if TypoScript
+	/**
+	 * Carga un CSS configurado como plugin.tx_f2contentce.settings.actioname.stylesheet
 	 *
-	*/
+	 * @return void
+	 */
 	private function addStylesheet(){
 			$stylesheet = $this->settings[$this->request->getControllerActionName()]['stylesheet'];
 				// "EXT:" shortcut replaced with the extension path
@@ -203,6 +223,11 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 			}
 	}
 
+	/**
+	 * Carga un JS configurado como plugin.tx_f2contentce.settings.actioname.js
+	 *
+	 * @return void
+	 */
 	private function addJs(){
 			$js = $this->settings[$this->request->getControllerActionName()]['js'];
 				// "EXT:" shortcut replaced with the extension path
