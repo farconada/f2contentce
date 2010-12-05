@@ -37,7 +37,7 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	)
 );
 
-/*
+
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'Gallery',
@@ -48,6 +48,6 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 		'Contentce' => 'cycleGallery',
 	)
 );
-*/
+
 
 ?>

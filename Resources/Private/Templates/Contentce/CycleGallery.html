@@ -1,1 +1,5 @@
-<h1>Cycle Gallery</h1>
+<div class="f2contentce feedEntries cyclegallery">
+	<f:for each="{images}" as="entry">
+		<img src="{f:uri.image(src:'uploads/f2contentce/cyclegallery/{entry.image.file}', minWidth: 100, maxWidth: 300)}" />
+	</f:for>
+</div>
