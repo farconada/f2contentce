@@ -40,11 +40,17 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	public function cycleGalleryAction() {
 		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/JavaScript/jquery.cycle.lite.min.js"></script>');
+
 		$this->view->assign('images', $this->settings['images']);
+		$this->view->assign('minWidth', t3lib_div::intval_positive($this->settings['minWidth']));
+		$this->view->assign('maxWidth', t3lib_div::intval_positive($this->settings['maxWidth']));
+
 		$this->response->addAdditionalHeaderData("
 			<script type=\"text/javascript\">
 				$(function() {
-					$('.f2contentce.feedEntries.cyclegallery').cycle();
+					$('.f2contentce.feedEntries.cyclegallery').cycle({
+						timeout: ". t3lib_div::intval_positive($this->settings['displayTime'])*1000
+					."});
 				});
 			</script>
 		");
