@@ -34,7 +34,7 @@ class tx_f2contentce_bepreview {
 		 */
 		public function renderPreviewContent_preProcess ($row, $table, &$alreadyRendered, &$reference) {
 				if ($row['CType'] === 'list' && preg_match('/f2contentce_/',$row['list_type'])) {
-						$content = $this->preview($row);
+						$content = $this->preview($row,$row['list_type']);
 						$alreadyRendered = TRUE;
 						return $content;
 				}
@@ -48,8 +48,25 @@ class tx_f2contentce_bepreview {
 		 * @param string $key plugin key
 		 * @return string rendered preview html
 		 */
-		protected function preview($row) {
-				$content = '<img src="../../../'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/Icons/plugin-preview.png" />';
+		protected function preview($row,$type) {
+				switch ($type) {
+					case 'f2contentce_feed':
+						$content = '<img src="../../../'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/Icons/plugin-preview-feed.png" />';;
+						break;
+					case 'f2contentce_gmaps':
+						$content = '<img src="../../../'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/Icons/plugin-preview-gmaps.png" />';;
+						break;
+					case 'f2contentce_gallery':
+						$content = '<img src="../../../'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/Icons/plugin-preview-gallery.png" />';;
+						break;
+					case 'f2contentce_video':
+						$content = '<img src="../../../'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/Icons/plugin-preview-video.png" />';;
+						break;
+					default:
+						$content = '<img src="../../../'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/Icons/plugin-preview.png" />';
+						break;
+				}
+
 				return $content;
 		}
 }
