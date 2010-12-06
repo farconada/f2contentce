@@ -49,5 +49,10 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	)
 );
 
+// Previw del plugin en la vista de lista
+if (TYPO3_MODE == 'BE') {
+			// Hook for the TV page module used for preview of content
+		$TYPO3_CONF_VARS['EXTCONF']['templavoila']['mod1']['renderPreviewContentClass']['f2contentce_bepreview'] = 'EXT:f2contentce/Classes/Util/class.tx_f2contentce_bepreview.php:tx_f2contentce_bepreview';
+}
 
 ?>
