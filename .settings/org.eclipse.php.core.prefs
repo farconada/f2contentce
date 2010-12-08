@@ -1,3 +1,5 @@
-#Sat Nov 20 16:32:08 CET 2010
+#Wed Dec 08 11:11:55 CET 2010
 eclipse.preferences.version=1
-include_path=0;/f2contentce\u00055;org.eclipse.dltk.USER_LIBRARY/TYPO3_SRC_4.5
+include_path=0;/f2contentce\u00055;org.eclipse.dltk.USER_LIBRARY/TYPO3_45\u00055;org.eclipse.dltk.USER_LIBRARY/TYPO3_Zend
+phpVersion=php5.3
+use_asp_tags_as_php=false
