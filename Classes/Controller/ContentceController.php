@@ -36,7 +36,22 @@ require_once 'Zend/Rest/Client.php';
  */
 class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Controller_ActionController {
 
+	/**
+	 * Inicializacion comun para todas las Action
+	 *
+	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
+	 */
+	public function initializeAction() {
+			// En TSplugin.tx_f2contentce.settings.actioname.js
+			// Puede ser relativo a EXT:
+		$this->addJavaScript(str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $this->settings[$this->request->getControllerActionName()]['js']));
+			// En TSplugin.tx_f2contentce.settings.actioname.stylesheet
+			// Puede ser relativo a EXT:
+		$this->addStylesheet(str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $this->settings[$this->request->getControllerActionName()]['stylesheet']));
+			// Utiliza el template pasado en el Flexform
+		$this->overrideViewFile(trim($this->settings['templateFile']));
 
+	}
 
 	public function cycleGalleryAction() {
 		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/JavaScript/jquery.cycle.lite.min.js"></script>');
@@ -224,13 +239,10 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	/**
 	 * Carga un CSS configurado como plugin.tx_f2contentce.settings.actioname.stylesheet
 	 *
+	 * @param string $stylesheet Path con la CSS
 	 * @return void
 	 */
-	private function addStylesheet(){
-			$stylesheet = $this->settings[$this->request->getControllerActionName()]['stylesheet'];
-				// "EXT:" shortcut replaced with the extension path
-			$stylesheet = str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $stylesheet);
-
+	private function addStylesheet($stylesheet){
 				// different solution to add the css if the action is cached or uncached
 			if ($this->request->isCached()) {
 					$GLOBALS['TSFE']->getPageRenderer()->addCssFile($stylesheet);
@@ -244,21 +256,30 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	/**
 	 * Carga un JS configurado como plugin.tx_f2contentce.settings.actioname.js
 	 *
+	 * @param string $jsFile JavaScript file
 	 * @return void
 	 */
-	private function addJs(){
-			$js = $this->settings[$this->request->getControllerActionName()]['js'];
-				// "EXT:" shortcut replaced with the extension path
-			$js = str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $js);
-
-				// different solution to add the css if the action is cached or uncached
+	private function addJavaScript($jsFile){
+				// different solution to add the JS if the action is cached or uncached
 			if ($this->request->isCached()) {
-					$GLOBALS['TSFE']->getPageRenderer()->addJsFile($js);
+					$GLOBALS['TSFE']->getPageRenderer()->addJsFile($jsFile);
 			} else {
 
 					$this->response->addAdditionalHeaderData('<script src="'.
-									$stylesheet.'" type="text/javascript" />');
+									$jsFile.'" type="text/javascript" />');
 			}
+	}
+
+	/**
+	 * Permite cargar otro template en la vista
+	 *
+	 * @param file $templateFile Fichero fluid
+	 * @return void
+	 */
+	private function overrideViewFile($templateFile) {
+		if($templateFile && file_exists($templateFile)) {
+			$this->view->setTemplatePathAndFilename($templateFile);
+		}
 	}
 
 }
