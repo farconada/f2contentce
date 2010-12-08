@@ -243,6 +243,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	 * @return void
 	 */
 	private function addStylesheet($stylesheet){
+		if($stylesheet && file_exists($stylesheet)) {
 				// different solution to add the css if the action is cached or uncached
 			if ($this->request->isCached()) {
 					$GLOBALS['TSFE']->getPageRenderer()->addCssFile($stylesheet);
@@ -251,6 +252,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 					$this->response->addAdditionalHeaderData('<link rel="stylesheet" type="text/css" href="'.
 									$stylesheet.'" media="all" />');
 			}
+		}
 	}
 
 	/**
@@ -260,6 +262,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	 * @return void
 	 */
 	private function addJavaScript($jsFile){
+		if($jsFile && file_exists($jsFile)) {
 				// different solution to add the JS if the action is cached or uncached
 			if ($this->request->isCached()) {
 					$GLOBALS['TSFE']->getPageRenderer()->addJsFile($jsFile);
@@ -268,6 +271,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 					$this->response->addAdditionalHeaderData('<script src="'.
 									$jsFile.'" type="text/javascript" />');
 			}
+		}
 	}
 
 	/**
