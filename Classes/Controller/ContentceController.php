@@ -42,15 +42,17 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
 	 */
 	public function initializeAction() {
-			// En TSplugin.tx_f2contentce.settings.actioname.js
+			// En TS plugin.tx_f2contentce.settings.actioname.js
 			// Puede ser relativo a EXT:
 		$this->addJavaScript(str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $this->settings[$this->request->getControllerActionName()]['js']));
-			// En TSplugin.tx_f2contentce.settings.actioname.stylesheet
+			// En TS plugin.tx_f2contentce.settings.actioname.stylesheet
 			// Puede ser relativo a EXT:
 		$this->addStylesheet(str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $this->settings[$this->request->getControllerActionName()]['stylesheet']));
+	}
+
+	public function initializeView($view) {
 			// Utiliza el template pasado en el Flexform
 		$this->overrideViewFile(trim($this->settings['templateFile']));
-
 	}
 
 	public function cycleGalleryAction() {
