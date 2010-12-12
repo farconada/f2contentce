@@ -22,13 +22,13 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'Flickr',
 	'f2contentce Flickr'
 );
-/*
+
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
 	'Gallery',
 	'f2contentce Gallery'
 );
-*/
+
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'f2contentce');
 
@@ -45,7 +45,7 @@ t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gmaps', 'FILE:EXT:' . $_EXTKEY . '/C
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_gallery'] = 'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_gallery', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_gallery.xml');
 
-
+	// Icono en el asistente de elementos de contenido
 if (TYPO3_MODE == 'BE')	{
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_f2contentce_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'Classes/Util/class.tx_f2contentce_wizicon.php';
 }

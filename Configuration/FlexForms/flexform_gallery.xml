@@ -3,9 +3,32 @@
 	<ROOT>
 		<type>array</type>
 		<el>
+			<settings.templateFile>
+				<TCEforms>
+					<label>Template File (optional)</label>
+					<config>
+						<type>input</type>
+						<wizards type="array">
+						<_PADDING type="integer">2</_PADDING>
+							<link type="array">
+								<type>popup</type>
+								<title>Link</title>
+								<icon>link_popup.gif</icon>
+								<script>browse_links.php?mode=wizard&amp;act=file</script>
+								<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+								<params type="array">
+									<blindLinkOptions>page,url,mail,spec,folder</blindLinkOptions>
+									<allowedExtensions>html</allowedExtensions>
+								</params>
+
+							</link>
+						</wizards>
+					</config>
+				</TCEforms>
+			</settings.templateFile>
 			<settings.displayTime>
 				<TCEforms>
-					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.displayTime</label>
+					<label>Display time in seconds</label>
 					<config>
 						<type>input</type>
 						<size>6</size>
@@ -13,111 +36,26 @@
 					</config>
 				</TCEforms>
 			</settings.displayTime>
-			<settings.transition>
+			<settings.minWidth>
 				<TCEforms>
-					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.transitionStyle</label>
+					<label>Min Width</label>
 					<config>
-						<type>select</type>
-						<items type="array">
-							<numIndex index="0" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.transitionStyle.fade</numIndex>
-								<numIndex index="1">fade</numIndex>
-							</numIndex>
-							<numIndex index="1" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.transitionStyle.scrollUp</numIndex>
-								<numIndex index="1">scrollUp</numIndex>
-							</numIndex>
-							<numIndex index="2" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.transitionStyle.scrollDown</numIndex>
-								<numIndex index="1">scrollDown</numIndex>
-							</numIndex>
-							<numIndex index="3" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.transitionStyle.scrollLeft</numIndex>
-								<numIndex index="1">scrollLeft</numIndex>
-							</numIndex>
-							<numIndex index="4" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.transitionStyle.scrollRight</numIndex>
-								<numIndex index="1">scrollRight</numIndex>
-							</numIndex>
-							<numIndex index="5" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.transitionStyle.shuffle</numIndex>
-								<numIndex index="1">shuffle</numIndex>
-							</numIndex>
-						</items>
-					</config>
-				</TCEforms>
-			</settings.transition>
-			<settings.resolution>
-				<TCEforms>
-					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.aspectRatio</label>
-					<config>
-						<type>select</type>
-						<items type="array">
-							<numIndex index="0" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.aspectRatio.standard</numIndex>
-								<numIndex index="1">standard</numIndex>
-							</numIndex>
-							<numIndex index="1" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.aspectRatio.widescreen</numIndex>
-								<numIndex index="1">widescreen</numIndex>
-							</numIndex>
-							<numIndex index="2" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.aspectRatio.custom</numIndex>
-								<numIndex index="1">custom</numIndex>
-							</numIndex>
-						</items>
-					</config>
-					<onChange>reload</onChange>
-				</TCEforms>
-			</settings.resolution>
-			<settings.height>
-				<TCEforms>
-					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.height</label>
-					<config type="array">
 						<type>input</type>
 						<size>6</size>
-						<default>300</default>
+						<default>100</default>
 					</config>
-					<displayCond>FIELD:resolution:=:custom</displayCond>
 				</TCEforms>
-			</settings.height>
-			<settings.width>
+			</settings.minWidth>
+			<settings.maxWidth>
 				<TCEforms>
-					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.width</label>
-					<config type="array">
+					<label>Max Width</label>
+					<config>
 						<type>input</type>
 						<size>6</size>
 						<default>400</default>
 					</config>
-					<displayCond>FIELD:resolution:=:custom</displayCond>
 				</TCEforms>
-			</settings.width>
-			<settings.thumbnails>
-				<TCEforms>
-					<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.thumbnails</label>
-					<config type="array">
-						<type>select</type>
-						<items type="array">
-							<numIndex index="0" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.thumbnails.none</numIndex>
-								<numIndex index="1">none</numIndex>
-							</numIndex>
-							<numIndex index="1" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.thumbnails.small</numIndex>
-								<numIndex index="1">small</numIndex>
-							</numIndex>
-							<numIndex index="2" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.thumbnails.medium</numIndex>
-								<numIndex index="1">medium</numIndex>
-							</numIndex>
-							<numIndex index="3" type="array">
-								<numIndex index="0">LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.thumbnails.large</numIndex>
-								<numIndex index="1">large</numIndex>
-							</numIndex>
-						</items>
-					</config>
-				</TCEforms>
-			</settings.thumbnails>
+			</settings.maxWidth>
 			<settings.images>
 				<section>1</section>
 				<type>array</type>
@@ -125,12 +63,12 @@
 					<image>
 						<type>array</type>
 						<tx_templavoila>
-							<title>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.image</title>
+							<title>Image</title>
 						</tx_templavoila>
 						<el>
 							<file>
 								<TCEforms>
-									<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.imageFile</label>
+									<label>Image File</label>
 									<config>
 										<type>group</type>
 										<internal_type>file</internal_type>
@@ -143,25 +81,16 @@
 									</config>
 								</TCEforms>
 							</file>
-							<link>
+							<alt>
 								<TCEforms>
-									<label>LLL:EXT:wec_contentelements/slideshow/locallang.xml:flexform.slideshow.imageLink</label>
+									<label>Alt text</label>
 									<config>
 										<type>input</type>
-										<size>15</size>
-										<wizards type="array">
-											<_PADDING type="integer">2</_PADDING>
-											<link type="array">
-												<type>popup</type>
-												<title>Link</title>
-												<icon>link_popup.gif</icon>
-												<script>browse_links.php?mode=wizard</script>
-												<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
-											</link>
-										</wizards>
+										<size>50</size>
+										<default></default>
 									</config>
 								</TCEforms>
-							</link>
+							</alt>
 						</el>
 					</image>
 				</el>
