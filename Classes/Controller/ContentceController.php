@@ -40,6 +40,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	 * Inicializacion comun para todas las Action
 	 *
 	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeAction()
+	 * @return void
 	 */
 	public function initializeAction() {
 			// En TS plugin.tx_f2contentce.settings.actioname.js
@@ -50,18 +51,34 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$this->addStylesheet(str_replace('EXT:', t3lib_extMgm::siteRelPath('f2contentce'), $this->settings[$this->request->getControllerActionName()]['stylesheet']));
 	}
 
+	/**
+	 * Sobrescribit el fichero de plantilla para usar uno personalizado
+	 *
+	 * @param object $view The view object
+	 * @see Tx_Extbase_MVC_Controller_ActionController::initializeView()
+	 * @return void
+	 */
 	public function initializeView($view) {
 			// Utiliza el template pasado en el Flexform
 		$this->overrideViewFile(trim($this->settings['templateFile']));
 	}
 
+	/**
+	 * Galeria de imagenes con fotos en el propio gestor
+	 *
+	 * @return html generado por la vista
+	 */
 	public function cycleGalleryAction() {
+			// JQuery Cycle plugin
 		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/JavaScript/jquery.cycle.lite.min.js"></script>');
 
+			// Imagenes y opciones de imagenes
 		$this->view->assign('images', $this->settings['images']);
 		$this->view->assign('minWidth', t3lib_div::intval_positive($this->settings['minWidth']));
 		$this->view->assign('maxWidth', t3lib_div::intval_positive($this->settings['maxWidth']));
 
+			// Codigo JS apra jecutar la galeria
+			// Solo se personaliza el tiempo entre imagenes
 		$this->response->addAdditionalHeaderData("
 			<script type=\"text/javascript\">
 				$(function() {
@@ -74,15 +91,19 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	}
 
 	/**
-	 * CE galeria sencilla de Flickr
+	 * CE galeria sencilla de Flickr. Coge unas fotos de un feed de flickr y las
+	 * muestra en una galeria de JQuery Cycle
 	 *
-	 * @return void
+	 * @return html generado por la vista
 	 */
 	public function flickrAction() {
+			// JQuery Cycle plugin
 		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="'.t3lib_extMgm::extRelPath('f2contentce').'Resources/Public/JavaScript/jquery.cycle.lite.min.js"></script>');
+			// FeedParser de la URL de Flickr
 		$feedParser = new Tx_F2contentce_Service_FeedParser($this->settings['url']);
 		$feedParser->setMaxEntries($this->settings['feed']['maxEntries']);
 
+			// Funcion que mapea un Feed general en un array asociativo
 		$feedParser->setArrayMapperFunction( function($entry, $otherArgs){
 			return array(
 						'title'        => strip_tags($entry->getTitle()),
@@ -96,17 +117,21 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 				);
 		});
 
+			// recupera las entradas del feed desde Flickr
 		try {
+			$data = array();
 			$data = $feedParser->getEntriesAsArray();
-				// Se cambia el tamaño de las fotos al seleccionado
-			foreach ($data as $key => $photo) {
-				$data[$key]['photo'] = preg_replace('/_m.jpg/', '_'.$this->settings['flickrPhotoSize'].'.jpg', $data[$key]['photo']);
-			}
-			$this->view->assign('feedEntries', $data);
 		} catch (Exception $e) {
 			$this->flashMessages->add($e->getMessage());
 			return ;
 		}
+
+			// Se cambia el tamaño de las fotos al seleccionado
+		foreach ($data as $key => $photo) {
+			$data[$key]['photo'] = preg_replace('/_m.jpg/', '_'.$this->settings['flickrPhotoSize'].'.jpg', $data[$key]['photo']);
+		}
+
+		$this->view->assign('feedEntries', $data);
 		$this->response->addAdditionalHeaderData("
 			<script type=\"text/javascript\">
 				$(function() {
@@ -119,7 +144,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	/**
 	 * CE video de YouTube con metadatos
 	 *
-	 * @return void
+	 * @return html generado por la vista
 	 */
 	public function youtubeAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
@@ -127,9 +152,12 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$video['id'] = $this->settings['videoId'];
 		$this->view->assign('video', $video);
 
+			// Si hay que mostrar mas cosas ademas del video
 		if ($this->settings['showMetadata']) {
 			$yt = new Zend_Gdata_YouTube();
 			try {
+					// hay que ir a YouTube para coger los metadatos y puede
+					// una excepcion
 				$youtubeVideo = $yt->getVideoEntry($video['id']);
 			} catch (Exception $e) {
 				$this->flashMessages->add('Error: ha habido un problema en el servidor al recuperar la informacion del video');
@@ -146,7 +174,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 	/**
 	 * CE video de Vimeo con metadatos
 	 *
-	 * @return void
+	 * @return html generado por la vista
 	 */
 	public function vimeoAction() {
 		$video['height'] = t3lib_div::intval_positive($this->settings['height']);
@@ -154,6 +182,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$video['id'] = $this->settings['videoId'];
 		$this->view->assign('video', $video);
 
+			// Si hay que mostrar mas cosas ademas del video
 		if ($this->settings['showMetadata']) {
 			$apiUrl = 'http://vimeo.com/api/v2/video/'.$video['id'].'.php';
 			$curl = curl_init($apiUrl);
@@ -169,12 +198,16 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 
 	/**
 	 * Busca los Feeds de una URL y muestra las entradas
+	 * Es recomendable configurar la pagina en UTF-8
 	 *
-	 * @return	void La vista HTML
+	 * @return html generado por la vista
 	 */
 	public function feedAction() {
 		$feedParser = new Tx_F2contentce_Service_FeedParser($this->settings['url']);
 		$feedParser->setMaxEntries($this->settings['feed']['maxEntries']);
+			// Funcion que mapea un Feed general en un array asociativo
+			// hay dos funciones en funcion de si hay que quitar o no el HTML
+			// del propio feed
 		if ($this->settings['feed']['stripHtmlTags']) {
 			$feedParser->setArrayMapperFunction( function($entry){
 				return array(
@@ -201,20 +234,23 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		}
 
 		try {
+			$data = array();
 			$data = $feedParser->getEntriesAsArray();
-			$this->view->assign('feedEntries', $data);
 		} catch (Exception $e) {
 			$this->flashMessages->add($e->getMessage());
+			return;
 		}
+		$this->view->assign('feedEntries', $data);
 
 	}
 
 	/**
 	 * CE GoogleMaps: marker + KML
 	 *
-	 * @return void
+	 * @return html generado por la vista
 	 */
 	public function gmapsAction() {
+			// JS de Google Maps v3
 		$this->response->addAdditionalHeaderData('<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&language=es"></script>');
 
 		$map['id'] = 'map-'.md5(time());

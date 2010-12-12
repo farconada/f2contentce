@@ -22,6 +22,13 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+/**
+ * Esta clase genera un preview del plugin en el BE para que sea mas amigable
+ * La clase de usa mediante un hook
+ *
+ * @author falcifer
+ *
+ */
 class tx_f2contentce_bepreview {
 		/**
 		 * Function called from TV, used to generate preview of this plugin
@@ -43,6 +50,8 @@ class tx_f2contentce_bepreview {
 
 		/**
 		 * Render the preview
+		 * Se utiliza la misma clase para general preview de todos los
+		 * plugins creados con esta extension
 		 *
 		 * @param array  $row tt_content row of the plugin
 		 * @param string $key plugin key

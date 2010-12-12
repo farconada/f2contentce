@@ -1,4 +1,11 @@
 <?php
+/**
+ * Esta clase se usa en un Hook para generar un icono en el asistente de
+ * elementos de contenido del BE
+ *
+ * @author falcifer
+ *
+ */
 class tx_f2contentce_wizicon {
 
 	/**
@@ -17,7 +24,7 @@ class tx_f2contentce_wizicon {
 	}
 
 	/**
-	 * Includes the locallang file for the 'tt_news' extension
+	 * Includes the locallang file
 	 *
 	 * @return	array		The LOCAL_LANG array
 	 */
