@@ -77,17 +77,27 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$this->view->assign('minWidth', t3lib_div::intval_positive($this->settings['minWidth']));
 		$this->view->assign('maxWidth', t3lib_div::intval_positive($this->settings['maxWidth']));
 
-			// Codigo JS apra jecutar la galeria
-			// Solo se personaliza el tiempo entre imagenes
-		$this->response->addAdditionalHeaderData("
-			<script type=\"text/javascript\">
-				$(function() {
-					$('.f2contentce.feedEntries.cyclegallery').cycle({
-						timeout: ". t3lib_div::intval_positive($this->settings['displayTime'])*1000
-					."});
-				});
-			</script>
-		");
+		if ( !isset($GLOBALS['f2contentce_gallery_cycle'])) {
+			$GLOBALS['f2contentce_gallery_cycle'] = TRUE;
+				// Codigo JS apra jecutar la galeria
+				// Solo se personaliza el tiempo entre imagenes
+			$this->response->addAdditionalHeaderData("
+				<script type=\"text/javascript\">
+					$(function() {
+						$('.f2contentce.cyclegallery').cycle({
+							timeout: ". t3lib_div::intval_positive($this->settings['displayTime']) * 1000 .
+						"});
+					});
+				</script>
+				<style type=\"text/css\">
+					/* give slideshow some style */
+					.f2contentce.cyclegallery { margin: 20px auto; height: ". t3lib_div::intval_positive($this->settings['galleryHeight']) ."px }
+
+					/* give each slide the same dimensions */
+					.f2contentce.cyclegalleryr div { height: ". t3lib_div::intval_positive($this->settings['galleryHeight']) ."px;  }
+				</style>
+			");
+		}
 	}
 
 	/**
@@ -123,7 +133,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 			$data = $feedParser->getEntriesAsArray();
 		} catch (Exception $e) {
 			$this->flashMessages->add($e->getMessage());
-			return ;
+			return NULL;
 		}
 
 			// Se cambia el tamaño de las fotos al seleccionado
@@ -132,13 +142,25 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		}
 
 		$this->view->assign('feedEntries', $data);
-		$this->response->addAdditionalHeaderData("
-			<script type=\"text/javascript\">
-				$(function() {
-					$('.f2contentce.feedEntries.flickr').cycle();
-				});
-			</script>
-		");
+		if ( !isset($GLOBALS['f2contentce_feed_cycle'])) {
+			$GLOBALS['f2contentce_feed_cycle'] = TRUE;
+			$this->response->addAdditionalHeaderData("
+				<script type=\"text/javascript\">
+					$(function() {
+						$('.f2contentce.feedEntries.flickr').cycle({
+							timeout: ". t3lib_div::intval_positive($this->settings['displayTime']) * 1000 .
+						"});
+					});
+				</script>
+				<style type=\"text/css\">
+						/* give slideshow some style */
+						.f2contentce.feedEntries.flickr { margin: 20px auto; height: ". t3lib_div::intval_positive($this->settings['galleryHeight']) ."px }
+
+						/* give each slide the same dimensions */
+						.f2contentce.feedEntries.flickr div { height: ". t3lib_div::intval_positive($this->settings['galleryHeight']) ."px;  }
+				</style>
+			");
+		}
 	}
 
 	/**

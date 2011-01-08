@@ -56,6 +56,17 @@
 					</config>
 				</TCEforms>
 			</settings.maxWidth>
+			<settings.galleryHeight>
+				<TCEforms>
+					<label>Gallery Height (in pixels)</label>
+					<displayCond>FIELD:switchableControllerActions:=:Contentce->flickr</displayCond>
+					<config>
+						<type>input</type>
+						<size>6</size>
+						<default>400</default>
+					</config>
+				</TCEforms>
+			</settings.galleryHeight>
 			<settings.images>
 				<section>1</section>
 				<type>array</type>
