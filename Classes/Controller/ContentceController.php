@@ -77,17 +77,27 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$this->view->assign('minWidth', t3lib_div::intval_positive($this->settings['minWidth']));
 		$this->view->assign('maxWidth', t3lib_div::intval_positive($this->settings['maxWidth']));
 
-			// Codigo JS apra jecutar la galeria
-			// Solo se personaliza el tiempo entre imagenes
-		$this->response->addAdditionalHeaderData("
-			<script type=\"text/javascript\">
-				$(function() {
-					$('.f2contentce.feedEntries.cyclegallery').cycle({
-						timeout: ". t3lib_div::intval_positive($this->settings['displayTime'])*1000
-					."});
-				});
-			</script>
-		");
+		if ( !isset($GLOBALS['f2contentce_feed_cycle'])) {
+			$GLOBALS['f2contentce_feed_cycle'] = TRUE;
+				// Codigo JS apra jecutar la galeria
+				// Solo se personaliza el tiempo entre imagenes
+			$this->response->addAdditionalHeaderData("
+				<script type=\"text/javascript\">
+					$(function() {
+						$('.f2contentce.feedEntries.cyclegallery').cycle({
+							timeout: ". t3lib_div::intval_positive($this->settings['displayTime']) * 1000 .
+						'});
+					});
+				</script>
+				<style type=\"text/css\">
+					/* give slideshow some style */
+					.f2contentce.feedEntries.flickr { margin: 20px auto; width: 300px; height: 300px }
+
+					/* give each slide the same dimensions */
+					.f2contentce.feedEntries.flickr div { width: 300px; height: 300px;  }
+				</style>
+			');
+		}
 	}
 
 	/**
