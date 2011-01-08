@@ -152,10 +152,10 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 				</script>
 				<style type=\"text/css\">
 						/* give slideshow some style */
-						.f2contentce.feedEntries.flickr { margin: 20px auto; width: 300px; height: 300px }
+						.f2contentce.feedEntries.flickr { margin: 20px auto; height: 300px }
 
 						/* give each slide the same dimensions */
-						.f2contentce.feedEntries.flickr div { width: 300px; height: 300px;  }
+						.f2contentce.feedEntries.flickr div { height: 300px;  }
 				</style>
 			");
 		}

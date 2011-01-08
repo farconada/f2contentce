@@ -74,6 +74,28 @@
 					</config>
 				</TCEforms>
 			</settings.flickrPhotoSize>
+			<settings.displayTime>
+				<TCEforms>
+					<label>Display time in seconds</label>
+					<displayCond>FIELD:switchableControllerActions:=:Contentce->flickr</displayCond>
+					<config>
+						<type>input</type>
+						<size>6</size>
+						<default>3</default>
+					</config>
+				</TCEforms>
+			</settings.displayTime>
+			<settings.galleryHeight>
+				<TCEforms>
+					<label>Gallery Height (in pixels)</label>
+					<displayCond>FIELD:switchableControllerActions:=:Contentce->flickr</displayCond>
+					<config>
+						<type>input</type>
+						<size>6</size>
+						<default>400</default>
+					</config>
+				</TCEforms>
+			</settings.galleryHeight>
 			</el>
 		</ROOT>
 </T3DataStructure>
