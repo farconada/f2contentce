@@ -86,17 +86,17 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 					$(function() {
 						$('.f2contentce.cyclegallery').cycle({
 							timeout: ". t3lib_div::intval_positive($this->settings['displayTime']) * 1000 .
-						'});
+						"});
 					});
 				</script>
 				<style type=\"text/css\">
 					/* give slideshow some style */
-					.f2contentce.cyclegallery { margin: 20px auto; width: 300px; height: 300px }
+					.f2contentce.cyclegallery { margin: 20px auto; height: ". t3lib_div::intval_positive($this->settings['galleryHeight']) ."px }
 
 					/* give each slide the same dimensions */
-					.f2contentce.cyclegalleryr div { width: 300px; height: 300px;  }
+					.f2contentce.cyclegalleryr div { height: ". t3lib_div::intval_positive($this->settings['galleryHeight']) ."px;  }
 				</style>
-			');
+			");
 		}
 	}
 
@@ -133,7 +133,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 			$data = $feedParser->getEntriesAsArray();
 		} catch (Exception $e) {
 			$this->flashMessages->add($e->getMessage());
-			return ;
+			return NULL;
 		}
 
 			// Se cambia el tamaño de las fotos al seleccionado
@@ -152,10 +152,10 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 				</script>
 				<style type=\"text/css\">
 						/* give slideshow some style */
-						.f2contentce.feedEntries.flickr { margin: 20px auto; height: 300px }
+						.f2contentce.feedEntries.flickr { margin: 20px auto; height: ". t3lib_div::intval_positive($this->settings['galleryHeight']) ."px }
 
 						/* give each slide the same dimensions */
-						.f2contentce.feedEntries.flickr div { height: 300px;  }
+						.f2contentce.feedEntries.flickr div { height: ". t3lib_div::intval_positive($this->settings['galleryHeight']) ."px;  }
 				</style>
 			");
 		}
