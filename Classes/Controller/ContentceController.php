@@ -147,7 +147,9 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 			$this->response->addAdditionalHeaderData("
 				<script type=\"text/javascript\">
 					$(function() {
-						$('.f2contentce.feedEntries.flickr').cycle();
+						$('.f2contentce.feedEntries.flickr').cycle({
+							timeout: ". t3lib_div::intval_positive($this->settings['displayTime']) * 1000 .
+						"});
 					});
 				</script>
 				<style type=\"text/css\">
