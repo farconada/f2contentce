@@ -4,7 +4,7 @@
 	<div class="f2contentce feedEntries flickr">
 		<f:cObject typoscriptObjectPath="plugin.tx_f2contentce.settings.feed.preFeed"></f:cObject>
 			<f:for each="{feedEntries}" as="entry">
-				<a href="{entry.link}"><img src="{entry.photo}" alt="{entry.title}" /></a>
+				<div><a href="{entry.link}"><img src="{entry.photo}" alt="{entry.title}" /></a></div>
 			</f:for>
 		<f:cObject typoscriptObjectPath="plugin.tx_f2contentce.settings.feed.postFeed"></f:cObject>
 	</div>
