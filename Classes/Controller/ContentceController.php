@@ -238,7 +238,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 							'date' => $entry->getDateModified()->toString('d-M-y'),
 							'author'      => is_array($entry->getAuthors()) ? implode(' , ', $entry->getAuthors()): $entry->getAuthors(),
 							'link'         => $entry->getLink(),
-							'content'      => strip_tags($entry->getContent())
+							'content'      => strip_tags(utf8_decode($entry->getContent()))
 					);
 			});
 		} else {
@@ -249,7 +249,7 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 							'date' => $entry->getDateModified()->toString('d-M-y'),
 							'author'      => is_array($entry->getAuthors()) ? implode(' , ', $entry->getAuthors()): $entry->getAuthors(),
 							'link'         => $entry->getLink(),
-							'content'      => $entry->getContent()
+							'content'      => utf8_decode($entry->getContent())
 					);
 			});
 
