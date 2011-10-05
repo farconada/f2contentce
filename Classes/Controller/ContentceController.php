@@ -278,8 +278,8 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$map['id'] = 'map-'.md5(time());
 		$map['zoom'] = t3lib_div::intval_positive($this->settings['zoom']);
 		$map['latlong'] =
-			t3lib_div::intval_positive($this->settings['latitude']) . ',' .
-			t3lib_div::intval_positive($this->settings['longitude']);
+			floatval($this->settings['latitude']) . ',' .
+			floatval($this->settings['longitude']);
 		$map['kml'] = $this->addBaseUriIfNecessary( $this->settings['kml']);
 
 			// refactorizable?
