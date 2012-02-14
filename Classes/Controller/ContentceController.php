@@ -280,8 +280,9 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 		$map['latlong'] =
 			floatval($this->settings['latitude']) . ',' .
 			floatval($this->settings['longitude']);
-		$map['kml'] = $this->addBaseUriIfNecessary( $this->settings['kml']);
-
+        if($this->settings['kml']){
+            $map['kml'] = $this->addBaseUriIfNecessary( $this->settings['kml']);
+        }
 			// refactorizable?
 		$this->response->addAdditionalHeaderData('
 			<style>
@@ -293,7 +294,6 @@ class Tx_F2contentce_Controller_ContentceController extends Tx_Extbase_MVC_Contr
 			}
 			</style>
 		');
-
 		$this->view->assign('map', $map);
 	}
 	/**
